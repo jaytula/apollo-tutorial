@@ -19,3 +19,27 @@ Use `daisy@apollographql.com` for `$email` to obtain a token:
   }
 }
 ```
+
+### Book trips
+
+```gql
+mutation BookTrips($launchIds: [ID]!) {
+  bookTrips(launchIds: $launchIds) {
+    success
+    message
+    launches {
+      id
+    }
+  }
+}
+```
+
+Attempt with `launchIds` as `[67, 68, 69]`.
+
+Also needed is the token in the `authorization` header:
+
+```json
+{
+  "authorization": "ZGFpc3lAYXBvbGxvZ3JhcGhxbC5jb20"
+}
+```
