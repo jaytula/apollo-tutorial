@@ -43,3 +43,19 @@ Also needed is the token in the `authorization` header:
   "authorization": "ZGFpc3lAYXBvbGxvZ3JhcGhxbC5jb20"
 }
 ```
+
+## 5. Run your graph in production
+
+Create an account here: https://engine.apollographql.com/
+
+### Get a Graph Manager API key
+
+- Create new Graph
+- Add environment variable `APOLLO_KEY` in `.env`
+
+### Check and publish with the Apollo CLI
+
+- Start server (at `http://localhost:4000`)
+- Run `npx apollo service:push --endpoint=http://localhost:5000 --graph=name-of-graph`
+- Afterwards, explore the graph at https://engine.apollographql.com/
+- For subsequent changes, check for breacking changes with `npx apollo service:check --endpoint=http://localhost:4000 --graph=my-graph`
