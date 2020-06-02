@@ -67,7 +67,7 @@ module.exports = {
     },
   },
   Mission: {
-    missionPatch: (_, { mission, size } = { size: 'LARGE' }) => {
+    missionPatch: (mission, {  size } = { size: 'LARGE' }) => {
       return size === 'SMALL'
         ? mission.missionPatchSmall
         : mission.missionPatchLarge;
