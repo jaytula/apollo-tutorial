@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
-import { RouteComponentProps } from '@reach/router';
-import gql from 'graphql-tag';
+import React, { Fragment } from "react";
+import { RouteComponentProps } from "@reach/router";
+import gql from "graphql-tag";
 
-import * as LaunchDetailTypes from './__generated__/LaunchDetails';
-import { useQuery } from '@apollo/react-hooks';
-import { Loading, Header, LaunchDetail } from '../components';
-import { ActionButton } from '../containers';
+import * as LaunchDetailTypes from "./__generated__/LaunchDetails";
+import { useQuery } from "@apollo/react-hooks";
+import { Loading, Header, LaunchDetail } from "../components";
+import { ActionButton } from "../containers";
 
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
@@ -31,20 +31,28 @@ interface LaunchProps extends RouteComponentProps {
 }
 
 const Launch: React.FC<LaunchProps> = ({ launchId }) => {
-  const { data, loading, error } =
-    useQuery<LaunchDetailTypes.LaunchDetails, LaunchDetailTypes.LaunchDetailsVariables>(GET_LAUNCH_DETAILS, { variables: { launchId } });
+  const { data, loading, error } = useQuery<
+    LaunchDetailTypes.LaunchDetails,
+    LaunchDetailTypes.LaunchDetailsVariables
+  >(GET_LAUNCH_DETAILS, { variables: { launchId } });
 
   if (loading) return <Loading />;
-  if (error) return <p>ERROR: {error.message}</p>
-  if (!data) return <p>Not found</p>
+  if (error) return <p>ERROR: {error.message}</p>;
+  if (!data) return <p>Not found</p>;
 
-  return <Fragment>
-    <Header image={data.launch && data.launch.mission && data.launch.mission.missionPatch}>
-      {data && data.launch && data.launch.mission && data.launch.mission.name}
-    </Header>
-    <LaunchDetail {...data.launch} />
-    <ActionButton {...data.launch} />
-  </Fragment>;
-}
+  return (
+    <Fragment>
+      <Header
+        image={
+          data.launch && data.launch.mission && data.launch.mission.missionPatch
+        }
+      >
+        {data && data.launch && data.launch.mission && data.launch.mission.name}
+      </Header>
+      <LaunchDetail {...data.launch} />
+      <ActionButton {...data.launch} />
+    </Fragment>
+  );
+};
 
 export default Launch;
