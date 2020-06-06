@@ -17,16 +17,16 @@ const link = new HttpLink({
   },
 });
 
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
+  link,
+});
+
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
     cartItems: [],
   },
-});
-
-const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  cache,
-  link,
 });
 
 injectStyles();
