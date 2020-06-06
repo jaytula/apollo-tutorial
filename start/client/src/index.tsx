@@ -1,30 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { ApolloProvider } from '@apollo/react-hooks';
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloClient } from "apollo-client";
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+import { HttpLink } from "apollo-link-http";
 
-import Pages from './pages';
-import injectStyles from './styles';
+import Pages from "./pages";
+import injectStyles from "./styles";
+import { typeDefs, resolvers } from "./resolvers";
 
 const cache = new InMemoryCache();
-const link = new HttpLink({
-  uri: 'http://localhost:4000',
-  headers: {
-    authorization: localStorage.getItem('token'),
-  },
-});
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  link,
+  link: new HttpLink({
+    uri: "http://localhost:4000",
+    headers: {
+      authorization: localStorage.getItem("token"),
+    },
+  }),
+  typeDefs: typeDefs,
+  resolvers: resolvers,
 });
 
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token'),
+    isLoggedIn: !!localStorage.getItem("token"),
     cartItems: [],
   },
 });
@@ -34,5 +36,5 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Pages />
   </ApolloProvider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
